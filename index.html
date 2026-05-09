@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Whatsapp Web</title>
+<!-- Meta Pixel Code -->
+<script async="" src="js/fbevents.js"></script>
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','2500684137043103');
+fbq('track','PageView');
+</script>
+<!-- End Meta Pixel Code -->
+<script type="module" crossorigin="" src="js/index-64qhlLCz.js"></script>
+<link rel="stylesheet" crossorigin="" href="css/index-GKW-ljQD.css">
+<style>
+  html,body{background:#0b141a;font-family:"Segoe UI","Helvetica Neue",Helvetica,"Lucida Grande",Arial,Ubuntu,Cantarell,"Fira Sans",sans-serif;-webkit-font-smoothing:antialiased}
+  #root,#root *{font-family:"Segoe UI","Helvetica Neue",Helvetica,"Lucida Grande",Arial,Ubuntu,Cantarell,"Fira Sans",sans-serif!important}
+  .bg-\[\#efeae2\]{background-color:#efeae2!important;background-image:url("https://static.whatsapp.net/rsrc.php/v4/yl/r/gi_DckOUM5a.png");background-repeat:repeat;background-size:412.5px auto;background-blend-mode:multiply}
+  .bg-\[\#dcf8c6\].rounded-tr-none{position:relative}
+  .bg-white.rounded-tl-none{position:relative}
+  .bg-\[\#dcf8c6\].rounded-tr-none::before{content:"";position:absolute;top:0;right:-8px;width:8px;height:13px;background:#dcf8c6;clip-path:polygon(0 0,0 100%,100% 0)}
+  .bg-white.rounded-tl-none::before{content:"";position:absolute;top:0;left:-8px;width:8px;height:13px;background:#fff;clip-path:polygon(100% 0,100% 100%,0 0)}
+  .bg-\[\#dcf8c6\].rounded-2xl,.bg-white.rounded-2xl{box-shadow:0 1px .5px rgba(11,20,26,.13)!important}
+  .bg-\[\#00a884\]{background-color:#008069!important}
+  input::placeholder,textarea::placeholder{color:#8696a0!important}
+  .overflow-y-auto{-webkit-overflow-scrolling:touch}
+  .rounded-full.border-2{box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+</style>
+</head>
+<body>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2500684137043103&ev=PageView&noscript=1"/></noscript>
+<audio id="kairo-notif" src="notif.mp3" preload="auto"></audio>
+<div id="root"></div>
+<script>
+(function(){
+  var audio=document.getElementById('kairo-notif');
+  var lastPlay=0;
+  function play(){
+    var now=Date.now();
+    if(now-lastPlay<600)return;
+    lastPlay=now;
+    try{
+      audio.muted=false;
+      audio.volume=1;
+      audio.currentTime=0;
+      var p=audio.play();
+      if(p&&p.catch)p.catch(function(){lastPlay=0;});
+    }catch(e){lastPlay=0;}
+  }
+  // Unlock audio after first user interaction (autoplay policy)
+  function unlock(){
+    try{audio.muted=true;audio.play().then(function(){audio.pause();audio.muted=false;audio.currentTime=0;play();}).catch(function(){audio.muted=false;});}catch(e){}
+    document.removeEventListener('click',unlock);
+    document.removeEventListener('touchstart',unlock);
+    document.removeEventListener('keydown',unlock);
+  }
+  document.addEventListener('click',unlock,{once:true});
+  document.addEventListener('touchstart',unlock,{once:true});
+  document.addEventListener('keydown',unlock,{once:true});
+
+  // Detect bot (incoming) message: justify-start container, no #dcf8c6 (sent) bubble
+  function isBotMessage(n){
+    if(!(n instanceof HTMLElement))return false;
+    if(/INPUT|TEXTAREA|BUTTON/i.test(n.tagName))return false;
+    var html=n.outerHTML||'';
+    if(!html)return false;
+    // Must contain a chat bubble
+    if(!/rounded/.test(html))return false;
+    var t=(n.innerText||'').trim();
+    if(!t||t.length<1)return false;
+    // Sent messages use the light-green bg #dcf8c6 OR justify-end alignment
+    var isSent=/#dcf8c6|justify-end/i.test(html);
+    if(isSent)return false;
+    // Bot messages align left (justify-start) — check the node or descendants
+    return /justify-start/i.test(html);
+  }
+  var obs=new MutationObserver(function(muts){
+    for(var i=0;i<muts.length;i++){
+      var m=muts[i];
+      for(var j=0;j<m.addedNodes.length;j++){
+        var node=m.addedNodes[j];
+        if(node.nodeType===1 && isBotMessage(node)){
+          play();
+          return;
+        }
+      }
+    }
+  });
+  var startObs=function(){
+    var root=document.getElementById('root');
+    if(!root||!root.firstChild){return setTimeout(startObs,200);}
+    obs.observe(root,{childList:true,subtree:true});
+    // Initial chat-open notification
+    setTimeout(play,800);
+  };
+  startObs();
+})();
+</script>
+</body></html>
